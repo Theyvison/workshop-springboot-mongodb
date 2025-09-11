@@ -2,6 +2,7 @@ package com.theyvison.workshopmongo.config;
 
 import com.theyvison.workshopmongo.domain.Post;
 import com.theyvison.workshopmongo.domain.User;
+import com.theyvison.workshopmongo.dto.AuthorDTO;
 import com.theyvison.workshopmongo.repositories.PostRepository;
 import com.theyvison.workshopmongo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +36,14 @@ public class Instantiation implements CommandLineRunner {
         User alex = new User(null, "Alex Green", "alex@gmail.com");
         User bob = new User(null, "Bob Grey", "bob@gmail.com");
 
+        userRepository.saveAll(Arrays.asList(maria, alex, bob));
+
         Post post1 = new Post(
                 null,
                 sdf.parse("21/03/2025"),
                 "Partiu viagem",
                 "Vou viajar para São Paulo. Abraços!",
-                maria
+                new AuthorDTO(maria)
         );
 
         Post post2 = new Post(
@@ -48,10 +51,9 @@ public class Instantiation implements CommandLineRunner {
                 sdf.parse("21/03/2025"),
                 "Bom dia",
                 "Acordei feliz hoje!",
-                maria
+                new AuthorDTO(maria)
         );
 
-        userRepository.saveAll(Arrays.asList(maria, alex, bob));
         postRepository.saveAll(Arrays.asList(post1, post2));
     }
 }
